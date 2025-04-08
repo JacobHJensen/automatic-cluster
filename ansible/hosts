@@ -1,0 +1,36 @@
+[sw01]
+#INSERT IP OF SWITCH 1
+
+[sw02]
+#INSERT IP OF SWITCH 2
+
+[sw01:vars]
+host_key_checking=false
+ansible_network_os=ios
+ansible_ssh_user=#INSERT USERNAME
+ansible_ssh_password=#INSERT PASSWORD
+ansible_connection=network_cli
+ansible_become=yes
+ansible_become_method=enable
+ansible_become_password=#INSERT ENABLE PASSWORD
+
+[sw02:vars]
+host_key_checking=false
+ansible_network_os=ios
+ansible_ssh_user=#INSERT USERNAME
+ansible_ssh_password=#INSERT PASSWORD
+ansible_connection=network_cli
+ansible_become=yes
+ansible_become_method=enable
+ansible_become_password=#INSERT ENABLE PASSWORD
+
+[dns01]
+#INSERT IP OF DNS
+
+[dns01:vars]
+host_key_checking=false
+ansible_user=#INSERT USERNAME
+ansible_become_pass=#INSERT PASSWORD
+ansible_password=#INSERT PASSWORD
+ansible_ssh_pass=#INSERT PASSWORD
+ansible_sudo_password=#INSERT PASSWORD
