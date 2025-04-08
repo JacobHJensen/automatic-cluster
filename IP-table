@@ -1,3 +1,35 @@
-Attempt | #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 | #10 | #11
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Seconds | 301 | 283 | 290 | 286 | 289 | 285 | 287 | 287 | 272 | 276 | 269
+OSPF AREA 0 (all networks is /30)
+| Enhed        | Port   | IP       |
+|--------------|--------|----------|
+| RTR          | 1      | 10.0.3.1 |
+|              | 2      | 10.0.3.5 |
+| stack-switch | g2/0/1 | 10.0.3.2 |
+|              | g4/0/1 | 10.0.3.6 |
+
+
+
+vSphere MGMT network (VLAN99 - 10.0.99.X/24)
+| Enhed        | Port    | IP |
+|--------------|---------|----|
+| stack-switch | svi99   | .1 |
+| ESXI01       | 1       | .2 |
+| ESXI02       | g2/0/11 | .3 |
+| ESXI03       | 1       | .4 |
+| ESXI01-LACP  | 2-3     | .5 |
+| ESXI02-LACP  | 2-3     | .6 |
+| ESXI03-LACP  | 2-3     | .7 |
+
+
+Intern network (VLAN10 - 10.0.10.X/24)
+| Enhed         | Port  | IP  |
+|---------------|-------|-----|
+| stack-switch  | SVI10 | .1  |
+| vCenter       | vm    | .2  |
+| truenas       | bxe0  | .3  |
+| dns01         | vm    | .4  |
+| cert01        |       | .5  |
+| gitlab-server |       | .6  |
+| runner01-vm   |       | .7  |
+| runner02-vm   |       | .8  |
+| runner03-vm   |       | .9  |
+| db01          |       | .13 |
