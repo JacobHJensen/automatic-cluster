@@ -1,0 +1,14 @@
+---
+
+- name: Initialize Docker Swarm on Manager Node
+  hosts: dockerswarm_main_node
+  become: yes
+  tasks:
+    - name: Run docker swarm init and extract join token
+      shell: "docker swarm init | grep 'docker swarm join --token' > /tmp/token.txt"
+
+    - name: Fetch the file
+      fetch:
+        src: /tmp/token.txt
+        dest: /tmp/token.txt
+        flat: yes #avoid nested dirs
