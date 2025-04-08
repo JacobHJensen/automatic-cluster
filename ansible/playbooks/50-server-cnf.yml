@@ -1,0 +1,43 @@
+---
+
+- name: Update 50-server.cnf file on hosts
+  hosts: galera_nodes
+  become: yes
+  vars_files:
+    - 50-server.cnf.vars
+  
+  tasks:
+
+    - name: Remove the original 50-server.cnf file
+      file:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state: absent
+
+    - name: Add to 50-server.cnf
+      blockinfile:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf
+        block: |
+
+          [server]
+          [mysqld]
+          pid-file                = /run/mysqld/mysqld.pid
+          basedir                 = /usr
+          expire_logs_days        = 10
+          character-set-server  = utf8mb4
+          collation-server      = utf8mb4_general_ci
+          [embedded]
+          [mariadb]
+          [mariadb-10.11]
+          [mysqld]
+          binlog_format=ROW
+          default-storage-engine=innodb
+          innodb_autoinc_lock_mode=2
+          bind-address=0.0.0.0
+          wsrep_on=ON
+          wsrep_provider=/usr/lib/galera/libgalera_smm.so
+          wsrep_cluster_name="{{ customer_name }}_galera_cluster"
+          wsrep_cluster_address="gcomm://{{ host_ip1 }},{{ host_ip2 }},{{ host_ip3 }}"
+          wsrep_sst_method=rsync
+          wsrep_node_address="{{ ansible_host }}"  # dynamically set IP address
+          wsrep_node_name="{{ inventory_hostname }}"  # dynamically set hostname
+        create: yes
